@@ -21,7 +21,7 @@ class Project(models.Model):
 class Review(models.Model):
     VOTE_TYPE = (
         ('up', 'up vote'),
-        ('down', 'down vote')
+        ('down', 'down v{{project.title}}ote')
     )
     # owner
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
