@@ -2,12 +2,12 @@
 
 {% block content %}
 
-<form>
+<form action= "" method="POST">
+    {% csrf_token %}
 <p> Are you sure you want to delate? {{object}}</p>
-    <a href="{% url 'project' %}">
-        <button> go back </button>
-    </a>
-    <input value type="submit" value ="Confirm">
+    <a href="{% url 'projects' %}">go back</a>
+
+    <input type="submit" value ="Confirm" />
 </form>
 
 {% endblock %}
