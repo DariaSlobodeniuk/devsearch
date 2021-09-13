@@ -37,6 +37,7 @@ def updateProject(request, pk):
     context = {'form': form}
     return render(request, "projects/project_form.html", context )
 
+
 def deleteProject(request, pk):
     project = Project.objects.get(id=pk)
     if request.method == "POST":
