@@ -2,13 +2,17 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.db.models import Q
 
-from .models import Project
+from .models import Project, Tag
 from .forms import ProjectForm
+from .utils import  search_project
 
 def projects(request):
-    projects = Project.objects.all()
-    context = {'projects': projects}
+
+    projects, search_query = search_project(request)
+
+    context = {'projects': projects, 'search_query': search_query}
     return render(request, 'projects/projects.html', context)
 
 
@@ -40,14 +44,14 @@ def updateProject(request, pk):
     project = profile.project_set.get(id=pk)
     form = ProjectForm(instance=project)
     if request.method == "POST":
-        form = ProjectForm(request.POST,  request.FILES, instance=project)
+        form = ProjectForm(request.POST, request.FILES, instance=project)
         if form.is_valid():
             form.save()
             messages.success(request, "project was updated successfully")
 
             return redirect('account')
     context = {'form': form}
-    return render(request, "projects/project_form.html", context )
+    return render(request, "projects/project_form.html", context)
 
 
 @login_required(login_url="login")
