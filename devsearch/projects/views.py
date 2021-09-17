@@ -3,16 +3,17 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 from .models import Project, Tag
 from .forms import ProjectForm
-from .utils import  search_project
+from .utils import search_project, pagination_project
+
 
 def projects(request):
-
     projects, search_query = search_project(request)
-
-    context = {'projects': projects, 'search_query': search_query}
+    custom_range, projects = pagination_project(request, projects, 3)
+    context = {'projects': projects, 'search_query': search_query, 'custom_range': custom_range}
     return render(request, 'projects/projects.html', context)
 
 
