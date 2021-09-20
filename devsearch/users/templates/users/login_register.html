@@ -24,7 +24,7 @@
 <!-- <p>already have  an account <a href="{% url 'login'%}">Login</a></p>-->
 
 <form class="form auth__form" method="POST" action="{% url 'register' %}">
-            {% csrf_token %}
+           {% csrf_token %}
           <!-- Input:first_name -->
         {% for field in form %}
           <div class="form__field">
