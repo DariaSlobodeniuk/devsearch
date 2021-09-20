@@ -14,10 +14,10 @@ def login_user(request):
     page = 'login'
 
     if request.user.is_authenticated:
-        return redirect('profiles')
+        return redirect(request.GET['next'] if 'next' in request.GET else 'account')
 
     if request.method == 'POST':
-        username = request.POST['username']
+        username = request.POST['username'].lower()
         password = request.POST['password']
 
         try:
